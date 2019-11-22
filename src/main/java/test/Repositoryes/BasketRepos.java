@@ -11,5 +11,4 @@ public interface BasketRepos extends CrudRepository<Basket, Integer> {
     List<Basket> findBasketByUsername(String username);
     void deleteByUsername(String username);
 
-
 }

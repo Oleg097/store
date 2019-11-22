@@ -11,9 +11,6 @@ public class Discount {
     private Integer dis_id;
     private Integer off;
 
-
-
-
     public Discount() {
     }
 

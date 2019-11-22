@@ -23,9 +23,6 @@ public class BuyController {
     @Autowired
     BasketRepos basketRepos;
 
-
-
-
     @GetMapping("/addToBasket/{product_id}/{username}")
     public String addToBasket(@PathVariable Integer product_id,
                               @PathVariable String username, Model model) {
@@ -34,14 +31,15 @@ public class BuyController {
         basketRepos.save(basket);
         return "redirect:/main";
     }
+
     //очень корявый метод!!!!!!!!!!!!!!
     @GetMapping("/myBasket/{username}")
     public String myBasket(@PathVariable String username, Model model) {
         List<Product> products = new LinkedList<>();
-        List<Basket>baskets=basketRepos.findBasketByUsername(username);
+        List<Basket> baskets = basketRepos.findBasketByUsername(username);
         for (Basket basket : baskets) {
-                products.addAll(basket.getProducts());
-            }
+            products.addAll(basket.getProducts());
+        }
         model.addAttribute("mybasket", products);
 
         return "mybasket";
@@ -49,36 +47,56 @@ public class BuyController {
 
 
     @GetMapping("/buyproducts/{username}")
-    public String byProducts(@PathVariable String username, Model model){
-        User user=userRepos.findByUsername(username);
-        Double totalprice=0.0;
+    public String byProducts(@PathVariable String username, Model model) {
+        User user = userRepos.findByUsername(username);
+
+        Double totalprice = new Double(0.0);  //обозначаем переменную для сравнивания с балансом
         List<Product> products = new LinkedList<>();
-        List<Basket>baskets=basketRepos.findBasketByUsername(username);
-        for (Basket basket : baskets) {
-            products.addAll(basket.getProducts());
+        List<Product> productsWithDiscount = new LinkedList<>();
+
+        List<Basket> baskets = basketRepos.findBasketByUsername(username); //осписок корзин
+        baskets.stream().forEach(s -> products.addAll(s.getProducts()));  //собираем все продукты в список
+
+        for (Product product : products) {
+            if (product.getDiscount() != null) {    // фильтруем на наличие скидок и добавляем в отдельній список
+                productsWithDiscount.add(product);
+            }
+        }
+        products.removeAll(productsWithDiscount);//удаляем из общего списка-товары со скидками
+        productsWithDiscount.sort(Comparator.comparing(Product::getDiscount)); // упорядочиваем скидки по возрастанию
+        for (Product product : productsWithDiscount) { // вставляем в "хвост"
+            products.add(product);
+        }
+        Collections.reverse(products);
+
+
+        int cont = 0;
+        for (Product product : products) {
+            if (cont < 3 && product.getDiscount() != 0) {
+                totalprice += product.getPrice() - product.getDiscount();
+                cont++;
+            } else {
+                totalprice += product.getPrice();
+            }
         }
 
 
-        for (Product product:products){
-            
-            totalprice+=product.getPrice();
 
-        }
-        if (totalprice>user.getMoney()){
-            //ЗАБОРЧИК НА ОТСУТСТВИЕ ДЕНЕГ
-            return "buyproducts";
-        }
-        user.setMoney(user.getMoney()-totalprice);
-        userRepos.save(user);
-        for(Basket basket : baskets){
-            basketRepos.delete(basket);
-        }
+            if (totalprice > user.getMoney()) {
+                //ЗАБОРЧИК НА ОТСУТСТВИЕ ДЕНЕГ
+                return "havenomoney";
+            }else {
+                user.setMoney(user.getMoney() - totalprice);
+
+                userRepos.save(user);
+                basketRepos.deleteAll(baskets);
 
 
+                model.addAttribute("buedproducts", products);
 
+                return "buyedproducts";
+            }
 
-
-        return "buyproducts";
 
     }
 }

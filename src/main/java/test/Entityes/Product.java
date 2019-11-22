@@ -1,12 +1,14 @@
 package test.Entityes;
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Set;
 
 @Entity
 
 
-public class Product {
+public class Product  {
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
     private Integer product_id;
@@ -17,23 +19,6 @@ public class Product {
     private Double price;
     private Integer discount;
     private Integer qty;
-
-    public String getCategory() {
-        return category;
-    }
-
-    public void setCategory(String category) {
-        this.category = category;
-    }
-
-    public List<Basket> getBaskets() {
-        return baskets;
-    }
-
-    public void setBaskets(List<Basket> baskets) {
-        this.baskets = baskets;
-    }
-
     @ManyToMany
     @JoinTable (name = "Basket",
             joinColumns = @JoinColumn(name = "product_id"),
@@ -53,6 +38,24 @@ public class Product {
         this.qty = qty;
 
     }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
+    public List<Basket> getBaskets() {
+        return baskets;
+    }
+
+    public void setBaskets(List<Basket> baskets) {
+        this.baskets = baskets;
+    }
+
+
 
     public Integer getProduct_id() {
         return product_id;
@@ -117,4 +120,9 @@ public class Product {
     public void setQty(Integer qty) {
         this.qty = qty;
     }
+
+
 }
+
+
+

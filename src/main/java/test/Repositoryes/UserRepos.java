@@ -1,5 +1,4 @@
 package test.Repositoryes;
-import org.springframework.data.annotation.Id;
 import org.springframework.data.repository.CrudRepository;
 import test.Entityes.User;
 

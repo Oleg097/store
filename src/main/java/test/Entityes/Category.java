@@ -11,6 +11,7 @@ public class Category {
     private Integer cat_id;
     private String cat_name;
 
+
     public Category(String cat_name) {
         this.cat_name = cat_name;
     }

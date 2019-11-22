@@ -22,20 +22,23 @@
 
         <button type="submit">Добавить</button>
     </form>
-<div>
 
-    <#list pro as prod>
-        <div>
-            <b>наименование : ${prod.product_name}</b>
-            <b>наименование : ${prod.vendor}</b>
-            <b>наименование : ${prod.description}</b>
-            <input type="hidden" name="_csrf" value="${_csrf.token}"/>
-        </div>
+<#list pro as pr>
+    <div>
+        <b>наименование : ${pr.product_name}</b>
+        <b>категория : ${pr.category}</b>
+        <b>производитель : ${pr.vendor}</b>
+        <b>цена : ${pr.price}</b>
+        <#if pr.discount??>
+            <b>скидка : ${pr.discount}</b>
         <#else >
-        no
-    </#list>
+            скидки нет(((
+        </#if>
+    </div>
+<#else >
+    no
+</#list>
 
-</div>
 
 
 

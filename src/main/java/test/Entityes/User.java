@@ -1,6 +1,7 @@
 package test.Entityes;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
@@ -19,6 +20,20 @@ public class User {
    @Enumerated(EnumType.STRING)
    private Set<Role> roles;
    private Double money=0.0;
+
+    @ManyToMany
+    @JoinTable (name = "Basket",
+            joinColumns = @JoinColumn(name = "username"),
+            inverseJoinColumns = @JoinColumn(name="basket_id"))
+    List<Basket>baskets;
+
+    public List<Basket> getBaskets() {
+        return baskets;
+    }
+
+    public void setBaskets(List<Basket> baskets) {
+        this.baskets = baskets;
+    }
 
     public Integer getId() {
         return id;
@@ -69,22 +84,6 @@ public class User {
         this.active = active;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        User user = (User) o;
-        return active == user.active &&
-                id.equals(user.id) &&
-                username.equals(user.username) &&
-                password.equals(user.password) &&
-                roles.equals(user.roles) &&
-                Objects.equals(money, user.money);
-    }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, username, password, active, roles, money);
-    }
 }
 

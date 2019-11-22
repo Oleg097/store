@@ -10,9 +10,7 @@ import test.Entityes.User;
 import test.Repositoryes.ProductRepos;
 import test.Repositoryes.UserRepos;
 
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 @Controller
 
@@ -44,6 +42,7 @@ public class StoreControler {
     public String addProducts(Model model) {
         Iterable<Product> products = productRepos.findAll();
         model.addAttribute("pro", products);
+
         return "addProduct";
     }
 
@@ -54,38 +53,11 @@ public class StoreControler {
         Product product = new Product(product_name, category, vendor, description, price, discount, qty);
         productRepos.save(product);
         Iterable<Product> products = productRepos.findAll();
+
         model.addAttribute("pro", products);
 
         return "addProduct";
     }
-    // віводим свои данные
-    @GetMapping("/myAccount/{user}")
-    public String account(@PathVariable String user,Model model) {
-        Iterable<User>user1=userRepos.findByUsernameEquals(user);
-        model.addAttribute("myinfo",user1);
-
-        return "addmoney";
-    }
-    // метод добавление деней
-    @PostMapping("/myAccount/{user}")
-    public String myAccount(@RequestParam(name = "yourId") Integer yourId,
-                            @RequestParam(name = "money") Integer money,Model model){
-        User user=userRepos.findByIdEquals(yourId);
-        user.setMoney(user.getMoney()+money);
-        userRepos.save(user);
-        model.addAttribute("myinfo",user);
-
-        return "afteradd";
-
-
-    }
-
-
-
-
-
-
-
 
 }
 

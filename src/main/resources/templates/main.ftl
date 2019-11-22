@@ -11,19 +11,23 @@
     </div>
 
 <div>
-    <a href="/myAccount/${name}">user</a>
+    <a href="/myAccount/${name}">МОИ ДАННЫЕ</a>
 </div>
 
 <div>
     <#list products as pr>
         <div>
             <b>наименование : ${pr.product_name}</b>
-
-            <b>наименование : ${pr.vendor}</b>
-
-            <b>наименование : ${pr.description}</b>
+            <b>категория : ${pr.category}</b>
+            <b>производитель : ${pr.vendor}</b>
+            <b>цена : ${pr.price}</b>
+            <#if pr.discount??>
+                <b>скидка : ${pr.discount}</b>
+            <#else >
+                скидки нет(((
+            </#if>
+            <a href="addToBasket/${pr.getProduct_id()}/${name}">ДОБАВИТЬ В КОРЗИНУ</a>
         </div>
-
     <#else >
         no
     </#list>

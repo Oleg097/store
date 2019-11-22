@@ -1,5 +1,6 @@
 package test.Entityes;
 import javax.persistence.*;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -16,6 +17,28 @@ public class Product {
     private Double price;
     private Integer discount;
     private Integer qty;
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
+    public List<Basket> getBaskets() {
+        return baskets;
+    }
+
+    public void setBaskets(List<Basket> baskets) {
+        this.baskets = baskets;
+    }
+
+    @ManyToMany
+    @JoinTable (name = "Basket",
+            joinColumns = @JoinColumn(name = "product_id"),
+            inverseJoinColumns = @JoinColumn(name="basket_id"))
+    private List<Basket> baskets;
 
     public Product() {
     }

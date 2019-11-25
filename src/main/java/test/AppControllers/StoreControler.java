@@ -48,9 +48,9 @@ public class StoreControler {
 
     @PostMapping("/addProducts")
     public String addProduct(@RequestParam String product_name, @RequestParam String category, @RequestParam String vendor,
-                             @RequestParam String description, @RequestParam Double price, @RequestParam Integer discount,
-                             @RequestParam Integer qty, Model model) {
-        Product product = new Product(product_name, category, vendor, description, price, discount, qty);
+                             @RequestParam String description, @RequestParam Double price, @RequestParam Double discount,
+                              Model model) {
+        Product product = new Product(product_name, category, vendor, description, price, discount);
         productRepos.save(product);
         Iterable<Product> products = productRepos.findAll();
 

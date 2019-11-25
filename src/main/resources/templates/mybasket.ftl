@@ -15,7 +15,14 @@
         </div>
 
     <#else >
-        no
+        в корзине нет товаров
     </#list>
-    <a href="/buyproducts/${name}"> КУПИТЬ ТОВАРЫ </a>
+</div>
+<div>
+    <div>
+        <a href="/buyproducts/${name}"> КУПИТЬ ТОВАРЫ </a>
+    </div>
+    <div>
+        <a href="/main">К СПИСКУ ТОВАРОВ</a>
+    </div>
 </div>

@@ -8,31 +8,36 @@ import java.util.Set;
 @Entity
 @Table(name = "usr")
 public class User {
-   @Id
-   @GeneratedValue (strategy = GenerationType.AUTO)
-   private Integer id;
-   private String username;
-   private String password;
-   private boolean active;
-
-   @ElementCollection (targetClass = Role.class, fetch = FetchType.EAGER)
-   @CollectionTable (name ="user_role", joinColumns = @JoinColumn(name = "user_id"))
-   @Enumerated(EnumType.STRING)
-   private Set<Role> roles;
-   private Double money=0.0;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
+    private String username;
+    private String password;
+    private boolean active;
+    @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
+    @CollectionTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"))
+    @Enumerated(EnumType.STRING)
+    private Set<Role> roles;
+    private Double money = 0.0;
 
     @ManyToMany
-    @JoinTable (name = "Basket",
+    @JoinTable(name = "product_user",
             joinColumns = @JoinColumn(name = "username"),
-            inverseJoinColumns = @JoinColumn(name="basket_id"))
-    List<Basket>baskets;
+            inverseJoinColumns = @JoinColumn(name = "product_id"))
+    List<Product> basket;
 
-    public List<Basket> getBaskets() {
-        return baskets;
+    public User() {
     }
 
-    public void setBaskets(List<Basket> baskets) {
-        this.baskets = baskets;
+    public User(String username, String password, boolean active, Set<Role> roles,
+                Double money, List<Product> basket, List<Product> buyed) {
+        this.username = username;
+        this.password = password;
+        this.active = active;
+        this.roles = roles;
+        this.money = money;
+        this.basket = basket;
+
     }
 
     public Integer getId() {
@@ -42,15 +47,6 @@ public class User {
     public void setId(Integer id) {
         this.id = id;
     }
-
-    public Double getMoney() {
-        return money;
-    }
-
-    public void setMoney(Double money) {
-        this.money = money;
-    }
-
 
     public String getUsername() {
         return username;
@@ -68,14 +64,6 @@ public class User {
         this.password = password;
     }
 
-    public Set<Role> getRoles() {
-        return roles;
-    }
-
-    public void setRoles(Set<Role> roles) {
-        this.roles = roles;
-    }
-
     public boolean isActive() {
         return active;
     }
@@ -84,6 +72,29 @@ public class User {
         this.active = active;
     }
 
+    public Set<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
+    }
+
+    public Double getMoney() {
+        return money;
+    }
+
+    public void setMoney(Double money) {
+        this.money = money;
+    }
+
+    public List<Product> getBasket() {
+        return basket;
+    }
+
+    public void setBasket(List<Product> basket) {
+        this.basket = basket;
+    }
+
 
 }
-

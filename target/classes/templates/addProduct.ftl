@@ -17,7 +17,6 @@
         <input type="text" name="description" placeholder="Описание"/>
         <input type="number" name="price" placeholder="ЦЕНА"/>
         <input type="number" name="discount" placeholder="СКИДКА"/>
-        <input type="number" name="qty" placeholder="Количество"/>
         <input type="hidden" name="_csrf" value="${_csrf.token}"/>
 
         <button type="submit">Добавить</button>
@@ -38,6 +37,9 @@
 <#else >
     no
 </#list>
+<div>
+    <a href="/main">К СПИСКУ ТОВАРОВ</a>
+</div>
 
 
 

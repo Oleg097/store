@@ -10,52 +10,43 @@ import java.util.Set;
 
 public class Product  {
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Integer product_id;
     private String product_name;
     private String category;
     private String vendor;
     private String description;
     private Double price;
-    private Integer discount;
-    private Integer qty;
+    private Double discount=0.0;
     @ManyToMany
-    @JoinTable (name = "Basket",
+    @JoinTable (name = "product_user",
             joinColumns = @JoinColumn(name = "product_id"),
-            inverseJoinColumns = @JoinColumn(name="basket_id"))
-    private List<Basket> baskets;
+            inverseJoinColumns = @JoinColumn(name="username"))
+    private List<User> users;
+
+
 
     public Product() {
     }
 
-    public Product(String product_name, String category, String vendor, String description, Double price, Integer discount, Integer qty) {
+    public Product(String product_name, String category, String vendor, String description, Double price, Double discount, List<User> users) {
         this.product_name = product_name;
         this.category = category;
         this.vendor = vendor;
         this.description = description;
         this.price = price;
         this.discount = discount;
-        this.qty = qty;
-
+        this.users = users;
     }
 
-    public String getCategory() {
-        return category;
-    }
-
-    public void setCategory(String category) {
+    public Product(String product_name, String category, String vendor, String description, Double price, Double discount) {
+        this.product_name = product_name;
         this.category = category;
+        this.vendor = vendor;
+        this.description = description;
+        this.price = price;
+        this.discount = discount;
     }
-
-    public List<Basket> getBaskets() {
-        return baskets;
-    }
-
-    public void setBaskets(List<Basket> baskets) {
-        this.baskets = baskets;
-    }
-
-
 
     public Integer getProduct_id() {
         return product_id;
@@ -73,12 +64,12 @@ public class Product  {
         this.product_name = product_name;
     }
 
-    public String getCategoty() {
+    public String getCategory() {
         return category;
     }
 
-    public void setCategoty(String categoty) {
-        this.category = categoty;
+    public void setCategory(String category) {
+        this.category = category;
     }
 
     public String getVendor() {
@@ -105,22 +96,21 @@ public class Product  {
         this.price = price;
     }
 
-    public Integer getDiscount() {
+    public Double getDiscount() {
         return discount;
     }
 
-    public void setDiscount(Integer discount) {
+    public void setDiscount(Double discount) {
         this.discount = discount;
     }
 
-    public Integer getQty() {
-        return qty;
+    public List<User> getUsers() {
+        return users;
     }
 
-    public void setQty(Integer qty) {
-        this.qty = qty;
+    public void setUsers(List<User> users) {
+        this.users = users;
     }
-
 
 }
 

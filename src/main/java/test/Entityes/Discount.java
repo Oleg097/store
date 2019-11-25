@@ -1,23 +1,13 @@
 package test.Entityes;
 
 import javax.persistence.*;
-import java.util.Set;
 
 @Entity
 
 public class Discount {
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Integer dis_id;
-    private Integer off;
-
-    public Discount() {
-    }
-
-    public Discount(Integer dis_id, Integer off) {
-        this.dis_id = dis_id;
-        this.off = off;
-    }
 
     public Integer getDis_id() {
         return dis_id;
@@ -27,11 +17,8 @@ public class Discount {
         this.dis_id = dis_id;
     }
 
-    public Integer getOff() {
-        return off;
+    public Discount() {
     }
 
-    public void setOff(Integer off) {
-        this.off = off;
-    }
+
 }

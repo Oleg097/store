@@ -29,7 +29,7 @@
             <a href="addToBasket/${pr.getProduct_id()}/${name}">ДОБАВИТЬ В КОРЗИНУ</a>
         </div>
     <#else >
-        no
+        НЕТ ТОВАРОВ В КАТАЛОГЕ
     </#list>
 </div>
 </html>

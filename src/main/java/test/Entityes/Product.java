@@ -1,9 +1,6 @@
 package test.Entityes;
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
-import java.util.Set;
 
 @Entity
 
@@ -23,8 +20,6 @@ public class Product  {
             joinColumns = @JoinColumn(name = "product_id"),
             inverseJoinColumns = @JoinColumn(name="username"))
     private List<User> users;
-
-
 
     public Product() {
     }
@@ -111,6 +106,7 @@ public class Product  {
     public void setUsers(List<User> users) {
         this.users = users;
     }
+
 
 }
 

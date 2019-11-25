@@ -1,12 +1,12 @@
 package test.AppControllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import test.Entityes.Discount;
 import test.Entityes.Product;
-import test.Entityes.User;
+import test.Repositoryes.DisRepos;
 import test.Repositoryes.ProductRepos;
 import test.Repositoryes.UserRepos;
 
@@ -19,6 +19,8 @@ public class StoreControler {
     ProductRepos productRepos;
     @Autowired
     UserRepos userRepos;
+    @Autowired
+    DisRepos disRepos;
 
 
 
@@ -49,9 +51,16 @@ public class StoreControler {
     @PostMapping("/addProducts")
     public String addProduct(@RequestParam String product_name, @RequestParam String category, @RequestParam String vendor,
                              @RequestParam String description, @RequestParam Double price, @RequestParam Double discount,
-                              Model model) {
+                             Model model) {
         Product product = new Product(product_name, category, vendor, description, price, discount);
+
+
         productRepos.save(product);
+        // если сумма скидки указана - создаем скидку
+        if (discount!=null){
+            Discount discount1=new Discount(discount,product.getProduct_id());
+            disRepos.save(discount1);
+        }
         Iterable<Product> products = productRepos.findAll();
 
         model.addAttribute("pro", products);

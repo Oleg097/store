@@ -2,7 +2,6 @@ package test.Entityes;
 
 import javax.persistence.*;
 import java.util.List;
-import java.util.Objects;
 import java.util.Set;
 
 @Entity

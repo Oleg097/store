@@ -9,9 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import test.Entityes.Role;
 import test.Entityes.User;
 import test.Repositoryes.UserRepos;
-
 import java.util.Collections;
-import java.util.Map;
 
 @Controller
 public class RegistrationController {

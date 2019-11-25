@@ -1,7 +1,6 @@
 package test.AppControllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.method.P;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,7 +18,7 @@ public class BuyController {
     UserRepos userRepos;
     @Autowired
     ProductRepos productRepos;
-
+    //-добавляем товар в корзину
     @GetMapping("/addToBasket/{product_id}/{username}")
     public String addToBasket(@PathVariable Integer product_id,
                               @PathVariable String username, Model model) {
@@ -34,7 +33,7 @@ public class BuyController {
         return "redirect:/main";
     }
 
-    //очень корявый метод!!!!!!!!!!!!!!
+    // смотрим в свою корзину
     @GetMapping("/myBasket/{username}")
     public String myBasket(@PathVariable String username, Model model) {
         User user = userRepos.findByUsername(username);
@@ -44,7 +43,7 @@ public class BuyController {
         return "mybasket";
     }
 
-
+     // покупаем товар
     @GetMapping("/buyproducts/{username}")
     public String byProducts(@PathVariable String username, Model model) {
         User user = userRepos.findByUsername(username);
@@ -63,14 +62,14 @@ public class BuyController {
 
         int cont = 0;
         if(productsWithDiscount!=null){
-           productsWithDiscount.sort(Comparator.comparing(Product::getDiscount).reversed()); // упорядочиваем скидки по возрастанию
-           for (Product p : productsWithDiscount) {
-               if (cont<3){
-                   totalprice += p.getPrice() - p.getDiscount();
-                   cont++;
-               }else{totalprice+=p.getPrice();}
-           }
-       }
+            productsWithDiscount.sort(Comparator.comparing(Product::getDiscount).reversed()); // упорядочиваем скидки по возрастанию
+            for (Product p : productsWithDiscount) {
+                if (cont<3){
+                    totalprice += p.getPrice() - p.getDiscount();
+                    cont++;
+                }else{totalprice+=p.getPrice();}
+            }
+        }
         if (productsNoDiscount!=null) {
             for (Product p : productsNoDiscount) {
                 totalprice += p.getPrice();
